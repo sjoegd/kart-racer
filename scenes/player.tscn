@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg45beu3510rk"]
+
+[ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="1_sm73r"]
+[ext_resource type="PackedScene" uid="uid://cl31nwp877ubv" path="res://scenes/kart.tscn" id="2_h8h5r"]
+[ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="3_ukmi3"]
+[ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="4_tr8mo"]
+[ext_resource type="Script" path="res://addons/gevp/scripts/gui.gd" id="5_i0lah"]
+
+[node name="Player" type="Node3D"]
+
+[node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("1_sm73r")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+vehicle_node = NodePath("VehicleRigidBody")
+
+[node name="VehicleRigidBody" parent="VehicleController" instance=ExtResource("2_h8h5r")]
+
+[node name="EngineSound" parent="VehicleController/VehicleRigidBody" node_paths=PackedStringArray("vehicle") instance=ExtResource("3_ukmi3")]
+max_db = -24.0
+vehicle = NodePath("..")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_this")]
+transform = Transform3D(-1, -2.26267e-08, 8.44439e-08, 0, 0.965926, 0.258819, -8.74228e-08, 0.258819, -0.965926, 0, 3, -5)
+script = ExtResource("4_tr8mo")
+follow_height = 3
+follow_this = NodePath("../VehicleController/VehicleRigidBody")
+
+[node name="GUI" type="Control" parent="." node_paths=PackedStringArray("vehicle")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_i0lah")
+vehicle = NodePath("../VehicleController/VehicleRigidBody")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Speed" type="Label" parent="GUI/VBoxContainer"]
+layout_mode = 2
+
+[node name="RPM" type="Label" parent="GUI/VBoxContainer"]
+layout_mode = 2
+
+[node name="Gear" type="Label" parent="GUI/VBoxContainer"]
+layout_mode = 2

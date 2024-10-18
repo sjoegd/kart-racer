@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjoiwia2kdkbq"]
+
+[ext_resource type="Script" path="res://addons/gevp/scripts/vehicle_controllergd.gd" id="1_604bw"]
+[ext_resource type="PackedScene" uid="uid://cu54p60662hpy" path="res://scenes/kart.tscn" id="2_h8h5r"]
+
+[node name="Player" type="Node3D" node_paths=PackedStringArray("vehicle_node")]
+script = ExtResource("1_604bw")
+vehicle_node = NodePath("VehicleRigidBody")
+
+[node name="VehicleRigidBody" parent="." instance=ExtResource("2_h8h5r")]
+
+[node name="Camera3D" type="Camera3D" parent="VehicleRigidBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7914, 8.51411)
