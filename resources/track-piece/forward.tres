@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TrackPiece" load_steps=2 format=3 uid="uid://7kuyp5ycs4tg"]
+
+[ext_resource type="Script" path="res://resources/track-piece/track_piece.gd" id="1_a7220"]
+
+[resource]
+script = ExtResource("1_a7220")
+name = "Forward"
+before_update = Vector3i(0, 0, 0)
+update = Vector3i(0, 0, -1)
+mesh_name = "Straight"
+rotate = 0
+follow_up_pieces = Array[String](["Forward", "Forward <- Left", "Forward -> Right", "Forward | Up", "Forward | Down"])

@@ -21,7 +21,7 @@ vehicle = NodePath("..")
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_this")]
 transform = Transform3D(-1, -2.26267e-08, 8.44439e-08, 0, 0.965926, 0.258819, -8.74228e-08, 0.258819, -0.965926, 0, 3, -5)
 script = ExtResource("4_tr8mo")
-follow_height = 3
+follow_height = 3.0
 follow_this = NodePath("../VehicleController/VehicleRigidBody")
 
 [node name="GUI" type="Control" parent="." node_paths=PackedStringArray("vehicle")]

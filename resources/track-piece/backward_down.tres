@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TrackPiece" load_steps=2 format=3 uid="uid://bieg887w5f3ae"]
+
+[ext_resource type="Script" path="res://resources/track-piece/track_piece.gd" id="1_i4dva"]
+
+[resource]
+script = ExtResource("1_i4dva")
+name = "Backward | Down"
+before_update = Vector3i(0, -1, 0)
+update = Vector3i(0, 0, 1)
+mesh_name = "Ramp"
+rotate = 2
+follow_up_pieces = Array[String](["Backward"])

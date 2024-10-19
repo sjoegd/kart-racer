@@ -1,8 +1,8 @@
 extends Camera3D
 
-@export var follow_distance = 5
-@export var follow_height = 2
-@export var speed:=20.0
+@export var follow_distance := 5.0
+@export var follow_height := 2.0
+@export var speed := 20.0
 @export var follow_this : Node3D
 
 var start_rotation : Vector3
