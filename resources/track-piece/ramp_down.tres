@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TrackPiece" load_steps=2 format=3 uid="uid://12qer2nutu0n"]
+
+[ext_resource type="Script" path="res://resources/track-piece/track_piece.gd" id="1_k1s1o"]
+
+[resource]
+script = ExtResource("1_k1s1o")
+name = "Down"
+mesh_name = "Ramp"
+before_update = Vector3(0, -1, -1)
+update = Vector3(0, 0, -1)
+mesh_update = Vector3(0, -2, -2)
+rotation_update = 0.0
+mesh_rotation = 0.0
+alternate_90_degree_rot = true
+follow_up_pieces = Array[String](["Straight", "Left", "Right", "Big Left", "Big Right"])

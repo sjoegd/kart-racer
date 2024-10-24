@@ -1,41 +1,62 @@
-[gd_scene load_steps=25 format=3 uid="uid://o5efyvo7pxlw"]
+[gd_scene load_steps=14 format=3 uid="uid://o5efyvo7pxlw"]
 
 [ext_resource type="Script" path="res://scripts/track.gd" id="1_4h7ru"]
 [ext_resource type="MeshLibrary" uid="uid://cgwqubmqybu0u" path="res://assets/track-kit/track-kit-library.tres" id="1_hlntf"]
 [ext_resource type="Script" path="res://resources/track-piece/track_piece.gd" id="2_1ijw8"]
-[ext_resource type="Resource" uid="uid://7kuyp5ycs4tg" path="res://resources/track-piece/forward.tres" id="3_bvw8w"]
-[ext_resource type="Resource" uid="uid://dp80umxugkf7" path="res://resources/track-piece/forward_left.tres" id="4_bdr8w"]
-[ext_resource type="Resource" uid="uid://crea3l0igjwwe" path="res://resources/track-piece/forward_right.tres" id="5_6443k"]
-[ext_resource type="Resource" uid="uid://bdby7w2eu0lpm" path="res://resources/track-piece/backward.tres" id="6_k4xvp"]
-[ext_resource type="Resource" uid="uid://befqmgdoinkod" path="res://resources/track-piece/backward_left.tres" id="7_fiut7"]
-[ext_resource type="Resource" uid="uid://c1csiwv5cehmd" path="res://resources/track-piece/backward_right.tres" id="8_clf5o"]
-[ext_resource type="Resource" uid="uid://djngdj85yanw7" path="res://resources/track-piece/left.tres" id="9_yt14f"]
-[ext_resource type="Resource" uid="uid://b6mdyf8wd8cpe" path="res://resources/track-piece/left_backward.tres" id="10_cif6k"]
-[ext_resource type="Resource" uid="uid://crb4d0h3o0587" path="res://resources/track-piece/left_forward.tres" id="11_480an"]
-[ext_resource type="Resource" uid="uid://b0t4j0gmploy8" path="res://resources/track-piece/right.tres" id="12_aekd4"]
-[ext_resource type="Resource" uid="uid://dct5n5hmoxond" path="res://resources/track-piece/right_backward.tres" id="13_q6cdx"]
-[ext_resource type="Resource" uid="uid://cujepxf7fo07i" path="res://resources/track-piece/right_forward.tres" id="14_6saq8"]
-[ext_resource type="Resource" uid="uid://b8ffxuv58wfxx" path="res://resources/track-piece/forward_up.tres" id="15_efqql"]
-[ext_resource type="Resource" uid="uid://dd7t5wibdk3ew" path="res://resources/track-piece/backward_up.tres" id="16_bfwwy"]
-[ext_resource type="Resource" uid="uid://db5hjs7w3k35g" path="res://resources/track-piece/left_up.tres" id="17_fdeyy"]
-[ext_resource type="Resource" uid="uid://eg3v7hchxt4x" path="res://resources/track-piece/right_up.tres" id="18_b6d0o"]
-[ext_resource type="Resource" uid="uid://bieg887w5f3ae" path="res://resources/track-piece/backward_down.tres" id="19_v3ji1"]
-[ext_resource type="Resource" uid="uid://cgxkpakn71fy7" path="res://resources/track-piece/forward_down.tres" id="20_ihc5g"]
-[ext_resource type="Resource" uid="uid://b8ehjtwqkprjh" path="res://resources/track-piece/left_down.tres" id="21_dyoxu"]
-[ext_resource type="Resource" uid="uid://dev164vj6dojq" path="res://resources/track-piece/right_down.tres" id="22_p62o1"]
+[ext_resource type="Resource" uid="uid://b2qwkiom38wlo" path="res://resources/track-piece/start.tres" id="3_ma2cg"]
+[ext_resource type="Resource" uid="uid://cbb7yo0raxqjg" path="res://resources/track-piece/straight.tres" id="3_qpi15"]
+[ext_resource type="Resource" uid="uid://jmqrqttsdsjg" path="res://resources/track-piece/corner_left.tres" id="4_dnt5l"]
+[ext_resource type="Resource" uid="uid://bpakm742h3cdt" path="res://resources/track-piece/corner_big_left.tres" id="5_8vywd"]
+[ext_resource type="Resource" uid="uid://blw2vb0j5y8jx" path="res://resources/track-piece/corner_right.tres" id="5_ga5vo"]
+[ext_resource type="Resource" uid="uid://dqvf4krfh1lwl" path="res://resources/track-piece/ramp_up.tres" id="6_b205b"]
+[ext_resource type="Resource" uid="uid://12qer2nutu0n" path="res://resources/track-piece/ramp_down.tres" id="7_brgvi"]
+[ext_resource type="Resource" uid="uid://bkgparjulgheq" path="res://resources/track-piece/corner_big_right.tres" id="7_x0seu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0adl1"]
+rough = true
+bounce = 0.1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jxx3d"]
+size = Vector3(40, 18, 1)
 
 [node name="Track" type="Node3D"]
 script = ExtResource("1_4h7ru")
-track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("6_k4xvp"), ExtResource("7_fiut7"), ExtResource("8_clf5o"), ExtResource("3_bvw8w"), ExtResource("4_bdr8w"), ExtResource("5_6443k"), ExtResource("9_yt14f"), ExtResource("10_cif6k"), ExtResource("11_480an"), ExtResource("12_aekd4"), ExtResource("13_q6cdx"), ExtResource("14_6saq8"), ExtResource("15_efqql"), ExtResource("16_bfwwy"), ExtResource("17_fdeyy"), ExtResource("18_b6d0o"), ExtResource("19_v3ji1"), ExtResource("20_ihc5g"), ExtResource("21_dyoxu"), ExtResource("22_p62o1")])
+track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("5_8vywd"), ExtResource("5_ga5vo"), ExtResource("7_x0seu"), ExtResource("6_b205b"), ExtResource("7_brgvi")])
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_hlntf")
 physics_material = SubResource("PhysicsMaterial_0adl1")
 cell_size = Vector3(40, 20, 40)
 cell_center_y = false
+collision_mask = 3
 data = {
-"cells": PackedInt32Array(0, 0, 3)
+"cells": PackedInt32Array(0, 0, 9)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="FinishArea" type="Area3D" parent="GridMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+collision_layer = 4
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/FinishArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.01483, 0)
+shape = SubResource("BoxShape3D_jxx3d")
+
+[node name="Spawns" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="One" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11, 2, -19)
+
+[node name="Two" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 29, 2, -19)
+
+[node name="Three" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11, 2, 20)
+
+[node name="Four" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 29, 2, 20)
+
+[connection signal="body_entered" from="GridMap/FinishArea" to="." method="_on_finish_area_body_entered"]
