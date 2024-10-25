@@ -6,9 +6,10 @@
 script = ExtResource("1_ceek7")
 name = "Start"
 mesh_name = "Start"
-before_update = Vector3(0, 0, -1)
+before_update = Vector3(0, 0, 0)
 update = Vector3(0, 0, -2)
-mesh_update = Vector3(0, 0, -3)
+mesh_before_update = Vector3(0, 0, 1)
+mesh_update = Vector3(0, 0, -2)
 rotation_update = 0.0
 mesh_rotation = 0.0
 alternate_90_degree_rot = true

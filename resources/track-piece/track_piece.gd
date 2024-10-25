@@ -6,11 +6,12 @@ class_name TrackPiece
 # Mesh library item name
 @export var mesh_name: String
 
-# X Y Z Update needed beforehand
+# X Y Z Updates
 @export var before_update: Vector3 = Vector3.ZERO
-# X Y Z Update
 @export var update : Vector3 = Vector3.ZERO
+
 # For big pieces, specify the area that is used by the piece
+@export var mesh_before_update: Vector3 = Vector3.ZERO
 @export var mesh_update: Vector3 = Vector3.ZERO
 
 # Rotation update in degrees
@@ -27,8 +28,8 @@ class_name TrackPiece
 static func rotate_update(_update: Vector3, rot: float) -> Vector3:
 	return _update.rotated(Vector3.UP, deg_to_rad(rot))
 
-static func pos_vector3i(_update: Vector3) -> Vector3i:
-	return Vector3i(roundi(_update.x), roundi(_update.y), roundi(_update.z))
+static func pos_vector3i(pos: Vector3) -> Vector3i:
+	return Vector3i(roundi(pos.x), roundi(pos.y), roundi(pos.z))
 
 func total_update() -> Vector3:
 	return before_update + update

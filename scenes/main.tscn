@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_nj3su"]
 [ext_resource type="PackedScene" uid="uid://o5efyvo7pxlw" path="res://scenes/track.tscn" id="1_seqm2"]
-[ext_resource type="PackedScene" uid="uid://ctvdk4sgnbvjv" path="res://scenes/player.tscn" id="3_fi8rq"]
+[ext_resource type="PackedScene" uid="uid://26tjmx2o6p24" path="res://scenes/player.tscn" id="3_fi8rq"]
 [ext_resource type="Script" path="res://addons/free_look_camera/free_look_camera.gd" id="4_yqhk8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7j3dv"]
@@ -41,18 +41,17 @@ shadow_opacity = 0.7
 directional_shadow_max_distance = 10.0
 
 [node name="Track" parent="." instance=ExtResource("1_seqm2")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.6, 0)
+transform = Transform3D(0.21, 0, 0, 0, 0.21, 0, 0, 0, 0.21, 0, -0.6, 0)
 track_length = 50
-straight_weight = 0.8
 right_weight = 0.2
 left_weight = 0.2
 up_weight = 0.2
-down_weight = 0.1
+down_weight = 0.15
 
 [node name="Karts" type="Node3D" parent="."]
 
 [node name="Player" parent="Karts" instance=ExtResource("3_fi8rq")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0.763019, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.2, 1)
 kart_id = 1
 
 [node name="FreeLookCamera" type="Camera3D" parent="."]

@@ -34,6 +34,7 @@ func create_basic_track():
 	var c_piece: TrackPiece = find_piece_by_name("Start", track_pieces)
 	var c_rotation := 0.0
 	
+	# Place start
 	place_piece(c_piece, c_position, c_rotation)
 	c_position += TrackPiece.rotate_update(c_piece.total_update(), c_rotation)
 	c_rotation += c_piece.rotation_update
@@ -47,19 +48,23 @@ func create_basic_track():
 		c_position += TrackPiece.rotate_update(c_piece.total_update(), c_rotation)
 		c_rotation += c_piece.rotation_update
 		
-		
 		if i >= track_length - 1:
-			# Place finish
-			return place_finish(c_piece, c_position, c_rotation)
+			return place_finish(c_position, c_rotation)
 		
 		c_piece = get_valid_successor(get_piece_successors(c_piece), c_position, c_rotation)
 		if not c_piece:
 			print("NO VALID SUCCESSOR")
 			return false
 
-func place_finish(piece: TrackPiece, pos: Vector3, rot: float) -> bool:
-	# get finish_piece, place it
-	# update finish_area position and y rotation
+func place_finish(pos: Vector3, rot: float) -> bool:
+	var finish_piece = find_piece_by_name("Finish", track_pieces)
+	place_piece(finish_piece, pos, rot)
+	
+	var pos_i = TrackPiece.pos_vector3i(pos)
+	var grid_pos = grid_map.map_to_local(pos_i)
+	finish_area.rotation.y = deg_to_rad(rot)
+	finish_area.position = Vector3(grid_pos.x, grid_pos.y + grid_map.cell_size.y / 4, grid_pos.z)
+	
 	return true
 
 func _on_finish_area_body_entered(body: Node3D) -> void:
@@ -82,9 +87,8 @@ func find_piece_by_name(piece_name: String, pieces: Array[TrackPiece]):
 	return null
 
 func place_piece(piece: TrackPiece, pos: Vector3, rot: float):
-	var mesh_pos = pos + (TrackPiece.rotate_update(piece.mesh_update, rot))
-	var pos_i = TrackPiece.pos_vector3i(pos)
-	var mesh_pos_i = TrackPiece.pos_vector3i(mesh_pos)
+	var pos_i = TrackPiece.pos_vector3i(pos + TrackPiece.rotate_update(piece.mesh_before_update, rot))
+	var mesh_pos_i = TrackPiece.pos_vector3i(pos + TrackPiece.rotate_update(piece.mesh_update, rot))
 	
 	# Set all positions in range pos -> mesh_pos to USED_CELL_ITEM
 	for x in (range(pos_i.x, mesh_pos_i.x, get_range_step(pos_i.x, mesh_pos_i.x)) + [pos_i.x]):
@@ -113,7 +117,7 @@ func get_alternate_mesh_name(piece: TrackPiece) -> String:
 	
 	return mesh_name + " ALT"
 
-# Picks a random valid successor if there is any
+# Picks a (weighted) random valid successor if there is any
 func get_valid_successor(successors: Array[TrackPiece], pos: Vector3, rot: float):
 	var valid_filter = func(successor: TrackPiece):
 		return is_valid_piece_for_path(successor, pos, rot, 5)

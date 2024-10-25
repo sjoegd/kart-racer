@@ -1,12 +1,12 @@
 extends KartController
 class_name Player
 
-@onready var camera: Camera = $Camera3D
+@onready var camera: Camera = $Camera
 
-func reset_kart(marker: Marker3D):
-	super.reset_kart(marker)
+func reset(global_pos: Vector3, global_rot: Vector3):
+	super.reset(global_pos, global_rot)
 	camera.reset()
 
-func handle_input():
-	kart.accelerate_input = Input.get_axis("Accelerate", "Brake")
+func process_input():
+	kart.acceleration_input = Input.get_axis("Brake", "Accelerate")
 	kart.steering_input = Input.get_axis("SteerRight", "SteerLeft")

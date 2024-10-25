@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://o5efyvo7pxlw"]
+[gd_scene load_steps=15 format=3 uid="uid://o5efyvo7pxlw"]
 
 [ext_resource type="Script" path="res://scripts/track.gd" id="1_4h7ru"]
 [ext_resource type="MeshLibrary" uid="uid://cgwqubmqybu0u" path="res://assets/track-kit/track-kit-library.tres" id="1_hlntf"]
@@ -11,17 +11,17 @@
 [ext_resource type="Resource" uid="uid://dqvf4krfh1lwl" path="res://resources/track-piece/ramp_up.tres" id="6_b205b"]
 [ext_resource type="Resource" uid="uid://12qer2nutu0n" path="res://resources/track-piece/ramp_down.tres" id="7_brgvi"]
 [ext_resource type="Resource" uid="uid://bkgparjulgheq" path="res://resources/track-piece/corner_big_right.tres" id="7_x0seu"]
+[ext_resource type="Resource" uid="uid://u4fi00qotij6" path="res://resources/track-piece/finish.tres" id="11_0siun"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0adl1"]
-rough = true
-bounce = 0.1
+absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jxx3d"]
 size = Vector3(40, 18, 1)
 
 [node name="Track" type="Node3D"]
 script = ExtResource("1_4h7ru")
-track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("5_8vywd"), ExtResource("5_ga5vo"), ExtResource("7_x0seu"), ExtResource("6_b205b"), ExtResource("7_brgvi")])
+track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("5_8vywd"), ExtResource("5_ga5vo"), ExtResource("7_x0seu"), ExtResource("6_b205b"), ExtResource("7_brgvi"), ExtResource("11_0siun")])
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_hlntf")
@@ -38,25 +38,24 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 collision_layer = 4
 collision_mask = 2
-monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/FinishArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.01483, 0)
 shape = SubResource("BoxShape3D_jxx3d")
 
 [node name="Spawns" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
 [node name="One" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11, 2, -19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 1)
 
 [node name="Two" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 29, 2, -19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 20.353)
 
 [node name="Three" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11, 2, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 40)
 
 [node name="Four" type="Marker3D" parent="Spawns"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 29, 2, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 60)
 
 [connection signal="body_entered" from="GridMap/FinishArea" to="." method="_on_finish_area_body_entered"]

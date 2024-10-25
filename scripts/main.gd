@@ -1,16 +1,18 @@
 extends Node3D
 
 @onready var track: Track = $Track
-@onready var kart_controllers = $Karts.get_children() as Array[KartController]
+@onready var karts := $Karts.get_children()
 
 func _ready():
-	track.create_basic_track()
-	spawn_karts()
+	reset()
 
-func spawn_karts():
-	for i in range(kart_controllers.size()):
-		kart_controllers[i].reset_kart(track.spawns[i])
+func reset():
+	track.create_basic_track()
+	for i in range(karts.size()):
+		var kart: KartController = karts[i]
+		var spawn = track.spawns[i]
+		kart.reset(spawn.global_position, spawn.global_rotation)
 
 func _on_track_kart_finished(kart: Kart) -> void:
-	track.create_basic_track()
-	spawn_karts()
+	print(kart.controller.kart_id)
+	reset()
