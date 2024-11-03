@@ -96,26 +96,13 @@ func place_piece(piece: TrackPiece, pos: Vector3, rot: float):
 			for z in (range(pos_i.z, mesh_pos_i.z, get_range_step(pos_i.z, mesh_pos_i.z)) + [pos_i.z]):
 				grid_map.set_cell_item(Vector3i(x, y, z), USED_CELL_ITEM)
 
-	var alternate = abs(int(rot) % 180) == 90 && piece.alternate_90_degree_rot
-	var mesh_name = piece.mesh_name
-	if alternate:
-		mesh_name = get_alternate_mesh_name(piece)
-		
-	var item = grid_map.mesh_library.find_item_by_name(mesh_name)
+	var item = grid_map.mesh_library.find_item_by_name(piece.mesh_name)
 	var item_basis = Basis.IDENTITY.rotated(Vector3.UP, deg_to_rad(rot + piece.mesh_rotation))
 	
 	var before_update_pos = pos + (TrackPiece.rotate_update(piece.before_update, rot))
 	var before_update_pos_i = TrackPiece.pos_vector3i(before_update_pos)
 	
 	grid_map.set_cell_item(before_update_pos_i, item, grid_map.get_orthogonal_index_from_basis(item_basis))
-
-func get_alternate_mesh_name(piece: TrackPiece) -> String:
-	var mesh_name = piece.mesh_name
-	
-	if mesh_name.contains(" ALT"):
-		return mesh_name.replace(" ALT", "")
-	
-	return mesh_name + " ALT"
 
 # Picks a (weighted) random valid successor if there is any
 func get_valid_successor(successors: Array[TrackPiece], pos: Vector3, rot: float):

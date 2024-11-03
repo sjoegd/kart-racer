@@ -5,6 +5,7 @@ extends Node3D
 
 func _ready():
 	reset()
+	pass
 
 func reset():
 	track.create_basic_track()

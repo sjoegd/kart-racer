@@ -12,7 +12,9 @@ kart = NodePath("Kart")
 controller = NodePath("..")
 
 [node name="Camera" type="Camera3D" parent="." node_paths=PackedStringArray("kart")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00375557, 2.01055, 4.99931)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 2.4)
+fov = 85.0
 script = ExtResource("3_7i8c6")
-speed = 1.0
+follow_distance = 2.4
+follow_height = 1.4
 kart = NodePath("../Kart")

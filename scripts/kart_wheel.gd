@@ -1,8 +1,12 @@
 extends RayCast3D
 
+@export var kart: Kart
 @export var vehicle_wheel: VehicleWheel3D
 @export var mesh: MeshInstance3D
 @export var offset: float = 0.0
+
+func _ready():
+	add_exception(kart)
 
 func _process(delta: float) -> void:
 	mesh.rotation = vehicle_wheel.rotation

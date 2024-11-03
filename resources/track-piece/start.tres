@@ -5,12 +5,11 @@
 [resource]
 script = ExtResource("1_ceek7")
 name = "Start"
-mesh_name = "Start"
+mesh_name = "Straight"
 before_update = Vector3(0, 0, 0)
-update = Vector3(0, 0, -2)
-mesh_before_update = Vector3(0, 0, 1)
-mesh_update = Vector3(0, 0, -2)
+update = Vector3(0, 0, -1)
+mesh_before_update = Vector3(0, 0, 0)
+mesh_update = Vector3(0, 0, -1)
 rotation_update = 0.0
 mesh_rotation = 0.0
-alternate_90_degree_rot = true
 follow_up_pieces = Array[String](["Straight"])

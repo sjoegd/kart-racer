@@ -18,9 +18,6 @@ class_name TrackPiece
 @export var rotation_update : float = 0.0
 # Added rotation to the mesh
 @export var mesh_rotation : float = 0.0
-# If the ALT (or non-ALT) version of the mesh should be used
-# at 90/270 degree rotations (going left or right)
-@export var alternate_90_degree_rot : bool = true
 
 # Names of pieces that are able to follow up this piece
 @export var follow_up_pieces: Array[String]

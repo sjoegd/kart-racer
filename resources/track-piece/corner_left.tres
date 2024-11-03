@@ -5,11 +5,11 @@
 [resource]
 script = ExtResource("1_40xy0")
 name = "Left"
-mesh_name = "Corner ALT"
+mesh_name = "Corner"
 before_update = Vector3(0, 0, 0)
 update = Vector3(-1, 0, 0)
+mesh_before_update = Vector3(0, 0, 0)
 mesh_update = Vector3(-1, 0, 0)
 rotation_update = 90.0
 mesh_rotation = 90.0
-alternate_90_degree_rot = true
-follow_up_pieces = Array[String](["Straight", "Up", "Down"])
+follow_up_pieces = Array[String](["Straight", "Up", "Down", "Left", "Right"])
