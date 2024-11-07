@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://o5efyvo7pxlw"]
+[gd_scene load_steps=14 format=3 uid="uid://o5efyvo7pxlw"]
 
 [ext_resource type="Script" path="res://scripts/track.gd" id="1_4h7ru"]
 [ext_resource type="MeshLibrary" uid="uid://hu22onoe3tbd" path="res://assets/track-kit/track-kit-library.tres" id="1_hlntf"]
@@ -6,27 +6,29 @@
 [ext_resource type="Resource" uid="uid://b2qwkiom38wlo" path="res://resources/track-piece/start.tres" id="3_ma2cg"]
 [ext_resource type="Resource" uid="uid://cbb7yo0raxqjg" path="res://resources/track-piece/straight.tres" id="3_qpi15"]
 [ext_resource type="Resource" uid="uid://jmqrqttsdsjg" path="res://resources/track-piece/corner_left.tres" id="4_dnt5l"]
-[ext_resource type="Resource" uid="uid://bpakm742h3cdt" path="res://resources/track-piece/corner_big_left.tres" id="5_8vywd"]
 [ext_resource type="Resource" uid="uid://blw2vb0j5y8jx" path="res://resources/track-piece/corner_right.tres" id="5_ga5vo"]
 [ext_resource type="Resource" uid="uid://dqvf4krfh1lwl" path="res://resources/track-piece/ramp_up.tres" id="6_b205b"]
 [ext_resource type="Resource" uid="uid://12qer2nutu0n" path="res://resources/track-piece/ramp_down.tres" id="7_brgvi"]
-[ext_resource type="Resource" uid="uid://bkgparjulgheq" path="res://resources/track-piece/corner_big_right.tres" id="7_x0seu"]
 [ext_resource type="Resource" uid="uid://u4fi00qotij6" path="res://resources/track-piece/finish.tres" id="11_0siun"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0adl1"]
+rough = true
 absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jxx3d"]
 size = Vector3(8, 2.5, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_fh4vf"]
+size = Vector3(10, 3, 10)
+
 [node name="Track" type="Node3D"]
 script = ExtResource("1_4h7ru")
-track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("5_8vywd"), ExtResource("5_ga5vo"), ExtResource("7_x0seu"), ExtResource("6_b205b"), ExtResource("7_brgvi"), ExtResource("11_0siun")])
+track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("5_ga5vo"), ExtResource("6_b205b"), ExtResource("7_brgvi"), ExtResource("11_0siun")])
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_hlntf")
 physics_material = SubResource("PhysicsMaterial_0adl1")
-cell_size = Vector3(10, 5, 10)
+cell_size = Vector3(10, 3, 10)
 cell_center_y = false
 collision_mask = 2
 data = {
@@ -41,19 +43,29 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/FinishArea"]
 shape = SubResource("BoxShape3D_jxx3d")
 
+[node name="BaseCellArea" type="Area3D" parent="GridMap"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/BaseCellArea"]
+shape = SubResource("BoxShape3D_fh4vf")
+
+[node name="CellAreas" type="Node3D" parent="GridMap"]
+
 [node name="Spawns" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 
 [node name="One" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, 2.5)
 
 [node name="Two" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, 7.5)
 
 [node name="Three" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, 13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, 12.5)
 
 [node name="Four" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, 13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, 17.5)
 
 [connection signal="body_entered" from="GridMap/FinishArea" to="." method="_on_finish_area_body_entered"]

@@ -12,5 +12,5 @@ mesh_before_update = Vector3(0, 0, 0)
 mesh_update = Vector3(0, 0, -1)
 rotation_update = 0.0
 mesh_rotation = 0.0
-alternate_90_degree_rot = false
+target_position_change = Vector3(0, 0, -0.5)
 follow_up_pieces = Array[String](["Straight", "Left", "Right", "Down", "Up"])

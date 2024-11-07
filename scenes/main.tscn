@@ -1,62 +1,50 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjnpjokfvqg86"]
+[gd_scene load_steps=10 format=3 uid="uid://bjnpjokfvqg86"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_nj3su"]
 [ext_resource type="PackedScene" uid="uid://o5efyvo7pxlw" path="res://scenes/track.tscn" id="1_seqm2"]
-[ext_resource type="PackedScene" uid="uid://26tjmx2o6p24" path="res://scenes/player.tscn" id="3_fi8rq"]
-[ext_resource type="Script" path="res://addons/free_look_camera/free_look_camera.gd" id="4_yqhk8"]
+[ext_resource type="PackedScene" uid="uid://dpsdto1nfdjw0" path="res://scenes/base_environment.tscn" id="2_pi34l"]
+[ext_resource type="PackedScene" uid="uid://5uktv3tdwns2" path="res://scenes/view.tscn" id="3_hsest"]
+[ext_resource type="Script" path="res://scripts/race.gd" id="3_sr167"]
+[ext_resource type="Script" path="res://resources/kart_instance.gd" id="4_b2514"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6tk1j"]
-sky_top_color = Color(0.469515, 0.686332, 0.937995, 1)
-sky_horizon_color = Color(0.598687, 0.656223, 0.718125, 1)
-sky_energy_multiplier = 0.75
-ground_bottom_color = Color(0.470588, 0.686275, 0.937255, 1)
-ground_horizon_color = Color(0.598687, 0.656223, 0.718125, 1)
-ground_energy_multiplier = 0.75
+[sub_resource type="Resource" id="Resource_htmlo"]
+script = ExtResource("4_b2514")
+kart_color = Color(0.068, 0.5678, 0.68, 1)
+controller_type = 1
+view = false
 
-[sub_resource type="Sky" id="Sky_q83l2"]
-sky_material = SubResource("ProceduralSkyMaterial_6tk1j")
+[sub_resource type="Resource" id="Resource_ggc4o"]
+script = ExtResource("4_b2514")
+kart_color = Color(0.3536, 0.68, 0.068, 1)
+controller_type = 1
+view = false
 
-[sub_resource type="Environment" id="Environment_ue3ui"]
-background_mode = 2
-sky = SubResource("Sky_q83l2")
-ambient_light_color = Color(0.473976, 0.473976, 0.473976, 1)
-ambient_light_sky_contribution = 0.1
-tonemap_mode = 2
-tonemap_white = 0.9
-ssao_enabled = true
-ssao_radius = 0.64
-ssao_intensity = 1.25
-ssil_intensity = 3.07
+[sub_resource type="Resource" id="Resource_im4cl"]
+script = ExtResource("4_b2514")
+kart_color = Color(0.629, 0.068, 0.68, 1)
+controller_type = 1
+view = false
+
+[sub_resource type="Resource" id="Resource_mtctj"]
+script = ExtResource("4_b2514")
+kart_color = Color(0.682353, 0.12549, 0.0705882, 1)
+controller_type = 0
+view = true
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_nj3su")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_ue3ui")
+[node name="BaseEnvironment" parent="." instance=ExtResource("2_pi34l")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.46679, -0.179184, -3.13295e-08, -0.358368, 0.93358, -0.5, 0.808505, 0.310356, 0, 0, 0)
-light_energy = 0.8
-shadow_enabled = true
-shadow_opacity = 0.75
-directional_shadow_max_distance = 10.0
+[node name="Race" type="Node3D" parent="." node_paths=PackedStringArray("track")]
+script = ExtResource("3_sr167")
+kart_instances = Array[ExtResource("4_b2514")]([SubResource("Resource_htmlo"), SubResource("Resource_ggc4o"), SubResource("Resource_im4cl"), SubResource("Resource_mtctj")])
+track = NodePath("Track")
 
-[node name="Track" parent="." instance=ExtResource("1_seqm2")]
+[node name="Track" parent="Race" instance=ExtResource("1_seqm2")]
 track_length = 50
-straight_weight = 0.5
-right_weight = 0.2
-left_weight = 0.2
-up_weight = 0.1
-down_weight = 0.075
+right_weight = 0.5
+left_weight = 0.5
+up_weight = 0.2
+down_weight = 0.2
 
-[node name="Karts" type="Node3D" parent="."]
-
-[node name="Player" parent="Karts" instance=ExtResource("3_fi8rq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.387, 1, 4.889)
-kart_id = 1
-
-[node name="FreeLookCamera" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.62582, 0.942568, 5.57087)
-script = ExtResource("4_yqhk8")
-
-[connection signal="kart_finished" from="Track" to="." method="_on_track_kart_finished"]
+[node name="View" parent="Race" node_paths=PackedStringArray("race") instance=ExtResource("3_hsest")]
+race = NodePath("..")

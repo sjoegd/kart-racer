@@ -19,6 +19,11 @@ class_name TrackPiece
 # Added rotation to the mesh
 @export var mesh_rotation : float = 0.0
 
+# Target position change (percentage of cell_size that should be added)
+@export var target_position_change : Vector3 = Vector3.ZERO
+# A multiplier that can help improve the target position prediction using successors
+@export var target_position_prediction_mult : Vector3 = Vector3.ONE
+
 # Names of pieces that are able to follow up this piece
 @export var follow_up_pieces: Array[String]
 
