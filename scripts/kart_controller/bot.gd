@@ -1,10 +1,9 @@
 extends KartController
 class_name Bot
 
-@export var track: Track
-
-@export var ray_count := 16
+@export var ray_count := 32
 @export var ray_length := 10.0
+@export var ray_angle_correct := 2.85
 
 @export var debug := false
 
@@ -22,14 +21,23 @@ func _ready() -> void:
 		ray_container.add_child(ray)
 		rays.append(ray)
 
-func process_input():
+func _process(delta: float) -> void:
+	handle_ray_alignment(delta)
+
+func handle_ray_alignment(delta: float):
+	if abs(kart.rotation.x) <= deg_to_rad(ray_angle_correct):
+		ray_container.rotation.x = -kart.rotation.x
+	else:
+		ray_container.rotation.x = lerp(ray_container.rotation.x, 0.0, 10.0 * delta)
+
+func process_input(_viewed: bool):
 	var interest = calculate_interest()
 	var danger = calculate_danger()
 	var direction = calculate_direction(interest, danger)
 	perform_bot_input(direction)
 
 func calculate_interest() -> Array[float]:
-	var target_position = (track.get_kart_target_position(kart_id, false, 1) - kart.global_position).normalized()
+	var target_position = (race.track.get_kart_target_position(kart_id, false, 1) - kart.global_position).normalized()
 	var ray_to_interest = func(ray: RayCast3D) -> float:
 		var ray_target = (ray.to_global(ray.target_position) - kart.global_position).normalized()
 		return max(0, ray_target.dot(target_position))
@@ -51,39 +59,39 @@ func calculate_danger() -> Array[float]:
 func calculate_direction(interest: Array[float], danger: Array[float]) -> Vector3:
 	var direction = Vector3.ZERO
 	for i in rays.size():
-		var direction_weight = clamp(interest[i] - (1.5 * danger[i]), -0.20, 1.0)
+		var direction_weight = clamp(interest[i] - (1.25 * danger[i]), -interest[i] / 8 if interest[i] > 0.65 else 0.0, 1.0)
 		if debug:
-			DebugDraw3D.draw_arrow(kart.global_position, rays[i].to_global(rays[i].target_position.normalized() * direction_weight), Color.YELLOW, 0.1)
+			DebugDraw3D.draw_arrow(kart.global_position, rays[i].to_global(rays[i].target_position.normalized() * 2.0 * direction_weight), Color.YELLOW, 0.1, true)
 		direction += rays[i].target_position.normalized() * direction_weight
 	return direction
 
 func perform_bot_input(direction: Vector3):
 	direction = -direction.normalized()
 	
-	var acceleration = direction.z
+	var throttle = direction.z
 	var steering = direction.x
 	
 	# brake for turning
-	if kart.linear_velocity.length() >= 15.0:
-		acceleration -= 2.0 * abs(steering)
-	elif kart.linear_velocity.length() >= 10.0:
-		acceleration -= 1.25 * abs(steering)
-	elif kart.linear_velocity.length() >= 5.0:
-		acceleration -= abs(steering) / 2
+	if kart.linear_velocity.length() >= 12.5:
+		throttle -= 3.0 * abs(steering)
+	elif kart.linear_velocity.length() >= 7.5:
+		throttle -= 1.5 * abs(steering)
 	
-	# limit speed for ramp
+	# limit speed/steering for ramp
 	if abs(kart.linear_velocity.y) > 1 and kart.linear_velocity.length() >= 10.0:
-		acceleration = clamp(acceleration, -1.0, .2)
+		throttle = clamp(throttle, -1.0, .25)
+		steering = steering / 2
 	
 	# limit speed
-	if kart.linear_velocity.length() >= 16.0:
-		acceleration = clamp(acceleration, -1.0, 0.0)
+	if kart.linear_velocity.length() >= 17.5:
+		throttle = clamp(throttle, -1.0, 0.0)
 		
-	kart.acceleration_input = clamp(acceleration, -1.0, 1.0)
+	kart.throttle_input = clamp(throttle, -1.0, 1.0)
 	kart.steering_input = steering
 	
 	if debug:
-		DebugDraw3D.draw_arrow(kart.global_position, kart.to_global(-direction * ray_length), Color.PURPLE, 0.1)
+		DebugDraw3D.draw_arrow(kart.global_position, race.track.get_kart_target_position(kart_id, false, 1), Color.GREEN, 0.1, true)
+		DebugDraw3D.draw_arrow(kart.global_position, race.track.kart.to_global(-direction * 5.0), Color.PURPLE, 0.1, true)
 
-func _to_string() -> String:
-	return str("Bot ", kart_id)
+func get_controller_name() -> String:
+	return "Bot"

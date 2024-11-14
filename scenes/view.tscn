@@ -2,22 +2,19 @@
 
 [ext_resource type="Script" path="res://scripts/view.gd" id="1_tht8p"]
 [ext_resource type="Script" path="res://addons/free_look_camera/free_look_camera.gd" id="2_i1rb0"]
-
-[sub_resource type="SystemFont" id="SystemFont_72hht"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_s04ew"]
-font = SubResource("SystemFont_72hht")
-font_size = 20
-
-[sub_resource type="LabelSettings" id="LabelSettings_1737a"]
-font = SubResource("SystemFont_72hht")
-font_size = 24
+[ext_resource type="Theme" uid="uid://bhemjqyqhd6a0" path="res://ui/hud_theme.tres" id="3_g1o54"]
+[ext_resource type="PackedScene" uid="uid://bbpnea21ju6a2" path="res://ui/leaderboard/leaderboard.tscn" id="3_mcmcm"]
+[ext_resource type="PackedScene" uid="uid://d27b0qw3u625c" path="res://ui/speedometer/speedometer.tscn" id="4_2xh6d"]
 
 [node name="View" type="Node3D"]
 script = ExtResource("1_tht8p")
 
 [node name="Cameras" type="Node3D" parent="."]
+
+[node name="FreeLookCamera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+current = true
+script = ExtResource("2_i1rb0")
 
 [node name="FollowCamera" type="Camera3D" parent="Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 2.4)
@@ -34,34 +31,27 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+theme = ExtResource("3_g1o54")
 
-[node name="LeaderboardLabel" type="Label" parent="CanvasLayer/HUD"]
-layout_mode = 1
-offset_left = 15.0
-offset_top = 15.0
-offset_right = 99.0
-offset_bottom = 201.0
-text = "1. Player 0
-2. Bot 1"
-label_settings = SubResource("LabelSettings_s04ew")
+[node name="Leaderboard" parent="CanvasLayer/HUD" node_paths=PackedStringArray("view") instance=ExtResource("3_mcmcm")]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 130.0
+offset_bottom = 80.0
+view = NodePath("../../..")
 
-[node name="SpeedLabel" type="Label" parent="CanvasLayer/HUD"]
+[node name="Speedometer" parent="CanvasLayer/HUD" node_paths=PackedStringArray("view") instance=ExtResource("4_2xh6d")]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 15.0
-offset_top = -43.0
-offset_right = 114.0
-offset_bottom = -9.0
+offset_left = -50.0
+offset_top = -50.0
+offset_right = -50.0
+offset_bottom = -50.0
+grow_horizontal = 0
 grow_vertical = 0
-text = "50 KM/H"
-label_settings = SubResource("LabelSettings_1737a")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="FreeLookCamera" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("2_i1rb0")
+view = NodePath("../../..")

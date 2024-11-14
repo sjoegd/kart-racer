@@ -33,7 +33,37 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "nodes": {
+"PATH:2x2Reference": {
+"import/skip_import": true
+},
+"PATH:BigCorner ALT S": {
+"import/skip_import": true
+},
+"PATH:BigCorner S": {
+"import/skip_import": true
+},
+"PATH:Corner ALT S": {
+"import/skip_import": true
+},
+"PATH:Corner S": {
+"import/skip_import": true
+},
+"PATH:Finish S": {
+"import/skip_import": true
+},
+"PATH:Ramp ALT S": {
+"import/skip_import": true
+},
+"PATH:Ramp S": {
+"import/skip_import": true
+},
 "PATH:Reference": {
+"import/skip_import": true
+},
+"PATH:Start S": {
+"import/skip_import": true
+},
+"PATH:Straight S": {
 "import/skip_import": true
 }
 }

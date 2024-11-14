@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://d27b0qw3u625c"]
+
+[ext_resource type="Script" path="res://ui/speedometer/speedometer.gd" id="1_b1pe5"]
+[ext_resource type="Theme" uid="uid://bhemjqyqhd6a0" path="res://ui/hud_theme.tres" id="1_oiklo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cyjdp"]
+font_size = 72
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.568627)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d4xbw"]
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.568627)
+
+[node name="Speedometer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_oiklo")
+script = ExtResource("1_b1pe5")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -80.0
+offset_bottom = 22.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = -20
+
+[node name="SpeedLabel" type="Label" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "0"
+label_settings = SubResource("LabelSettings_cyjdp")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Margin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_right = 3
+
+[node name="KMH" type="Label" parent="VBox/Margin"]
+layout_mode = 2
+text = "KM/H"
+label_settings = SubResource("LabelSettings_d4xbw")
+horizontal_alignment = 2
+vertical_alignment = 1

@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_x1gmu")
 name = "Big Right"
-mesh_name = "BigCorner ALT"
+mesh_name = "BigCornerALT"
 before_update = Vector3(0, 0, -1)
 update = Vector3(2, 0, 0)
 mesh_before_update = Vector3(0, 0, 0)
-mesh_update = Vector3(2, 0, -2)
+mesh_update = Vector3(2, 1, -2)
 rotation_update = -90.0
 mesh_rotation = 180.0
-follow_up_pieces = Array[String](["Straight", "Up", "Down", "Big Left"])
+target_position_change = Vector3(1.5, 0, -1)
+target_position_prediction_mult = Vector3(1, 1, 1)
+follow_up_pieces = Array[String](["Straight", "Up", "Down", "Left", "Big Left", "Right", "Big Right"])

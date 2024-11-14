@@ -2,6 +2,7 @@ extends Node3D
 class_name Race
 
 signal race_reset(start: bool)
+signal progression_tick
 
 var bot_scene: PackedScene = preload("res://scenes/bot.tscn")
 var player_scene: PackedScene = preload("res://scenes/player.tscn")
@@ -19,7 +20,7 @@ func _ready():
 	track.kart_finished.connect(_on_track_kart_finished)
 	create_kart_container()
 	for i in kart_instances.size():
-		spawn_kart(kart_instances[i], i)
+		spawn_kart(kart_instances[i], i + 1)
 	reset(true)
 
 func create_kart_container():
@@ -28,28 +29,24 @@ func create_kart_container():
 	add_child(kart_container)
 
 func spawn_kart(kart_instance: KartInstance, id: int):
-	match kart_instance.controller_type:
+	var controller_scene = get_controller_scene(kart_instance.controller_type)
+	var controller = controller_scene.instantiate() as KartController
+	controller.kart_id = id
+	controller.color = kart_instance.kart_color
+	controller.user_name = kart_instance.name if kart_instance.name != "" else controller.get_controller_name()
+	controller.name = str(controller)
+	controller.race = self
+	kart_container.add_child(controller)
+	karts.append(controller)
+
+func get_controller_scene(controller_type: KartController.TYPE) -> PackedScene:
+	match controller_type:
 		KartController.TYPE.PLAYER:
-			spawn_player(kart_instance, id)
+			return player_scene
 		KartController.TYPE.BOT:
-			spawn_bot(kart_instance, id)
+			return bot_scene
+	return null
 
-func spawn_player(kart_instance: KartInstance, id: int):
-	var player = player_scene.instantiate() as Player
-	player.kart_id = id
-	player.color = kart_instance.kart_color
-	player.name = str(player)
-	kart_container.add_child(player)
-	karts.append(player)
-
-func spawn_bot(kart_instance: KartInstance, id: int):
-	var bot = bot_scene.instantiate() as Bot
-	bot.kart_id = id
-	bot.color = kart_instance.kart_color
-	bot.track = track
-	bot.name = str(bot)
-	kart_container.add_child(bot)
-	karts.append(bot)
 
 func reset(start: bool = false):
 	track.create_basic_track()
@@ -70,6 +67,7 @@ func sort_karts_by_progression():
 		func(kart_a: KartController, kart_b: KartController):
 			return track.compare_kart_progression(kart_a.kart, kart_b.kart)
 	)
+	progression_tick.emit()
 
 func find_kart_by_id(kart_id: int) -> KartController:
 	for kart in karts:
@@ -80,7 +78,7 @@ func find_kart_by_id(kart_id: int) -> KartController:
 func get_default_view_id() -> int:
 	for i in kart_instances.size():
 		if kart_instances[i].view:
-			return i
+			return i + 1
 	return 0
 
 func _on_track_kart_finished(kart: Kart) -> void:

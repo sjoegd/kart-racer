@@ -14,4 +14,4 @@ rotation_update = 90.0
 mesh_rotation = 90.0
 target_position_change = Vector3(-0.5, 0, 0)
 target_position_prediction_mult = Vector3(1, 1, 1)
-follow_up_pieces = Array[String](["Straight", "Up", "Down", "Left", "Right"])
+follow_up_pieces = Array[String](["Straight", "Up", "Down", "Left", "Big Left", "Big Right"])

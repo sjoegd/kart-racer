@@ -7,10 +7,13 @@ signal kart_finished(kart: Kart)
 @export var track_length := 250
 @export var road_y_offset := 0.5
 @export var path_depth := 7
+@export var with_border := true
 
 @export var straight_weight := 1.0
-@export var right_weight := 1.0
 @export var left_weight := 1.0
+@export var right_weight := 1.0
+@export var big_left_weight := 1.0
+@export var big_right_weight := 1.0
 @export var up_weight := 1.0
 @export var down_weight := 1.0
 
@@ -20,11 +23,14 @@ signal kart_finished(kart: Kart)
 	'Straight': straight_weight,
 	'Left': left_weight,
 	'Right': right_weight,
+	'Big Left': big_left_weight,
+	'Big Right': big_right_weight,
 	'Up': up_weight,
 	'Down': down_weight
 }
 
 @onready var grid_map: GridMap = $GridMap
+@onready var grid_map_border: GridMap = $"GridMap BORDER"
 @onready var finish_area: Area3D = $GridMap/FinishArea
 @onready var base_cell_area: Area3D = $GridMap/BaseCellArea
 @onready var cell_areas: Node3D = $GridMap/CellAreas
@@ -40,15 +46,14 @@ var kart_id_to_furthest_piece_index: Dictionary = {}
 func create_basic_track():
 	clear_current_track()
 
-	var c_position := Vector3.BACK
+	var c_position := Vector3.ZERO
 	var c_piece: TrackPiece = find_piece_by_name("Start", track_pieces)
 	var c_rotation := 0.0
 
 	# Place start
-	for i in 2:
-		place_piece(c_piece, c_position, c_rotation)
-		c_position += TrackPiece.rotate_update(c_piece.total_update(), c_rotation)
-		c_rotation += c_piece.rotation_update
+	place_piece(c_piece, c_position, c_rotation)
+	c_position += TrackPiece.rotate_update(c_piece.total_update(), c_rotation)
+	c_rotation += c_piece.rotation_update
 
 	# Get valid successor for c_piece based on c_position and c_rotation
 	c_piece = get_valid_successor(get_piece_successors(c_piece), c_position, c_rotation)
@@ -69,6 +74,7 @@ func create_basic_track():
 
 func clear_current_track():
 	grid_map.clear()
+	grid_map_border.clear()
 	current_track.clear()
 	kart_id_to_current_piece_index.clear()
 	kart_id_to_furthest_piece_index.clear()
@@ -122,6 +128,9 @@ func place_piece(piece: TrackPiece, pos: Vector3, rot: float):
 	var before_update_pos_i = TrackPiece.pos_vector3i(before_update_pos)
 
 	grid_map.set_cell_item(before_update_pos_i, item, grid_map.get_orthogonal_index_from_basis(item_basis))
+	if with_border:
+		var item_border = grid_map.mesh_library.find_item_by_name(str(piece.mesh_name, " BORDER"))
+		grid_map_border.set_cell_item(before_update_pos_i, item_border, grid_map.get_orthogonal_index_from_basis(item_basis))
 	add_placed_piece(piece, pos, rot)
 
 func add_placed_piece(piece: TrackPiece, pos: Vector3, rot: float):
@@ -200,25 +209,23 @@ func is_valid_piece_for_path(piece: TrackPiece, pos: Vector3, rot: float, depth:
 
 # Picks a random successor based on the specified weights of pieces
 func pick_weighted_random_successor(successors: Array[TrackPiece]):
-	var random_nr = randf()
-	var threshold = 0;
+	for _i in range(5):
+		var random_nr = randf()
+		var threshold = 0;
 
-	var weights = successors.map(get_piece_weight)
-	var total_weight = weights.reduce(sum)
-	weights = weights.map(divide_by(total_weight))
+		var weights = successors.map(get_piece_weight)
+		var total_weight = weights.reduce(sum)
+		weights = weights.map(divide_by(total_weight))
 
-	for i in range(successors.size()):
-		threshold += weights[i]
-		if threshold > random_nr:
-			return successors[i]
+		for i in range(successors.size()):
+			threshold += weights[i]
+			if threshold > random_nr:
+				return successors[i]
 
 	return successors.pick_random()
 
 func get_piece_weight(piece: TrackPiece) -> float:
-	for key in piece_weights.keys():
-		if piece.name.contains(key):
-			return piece_weights[key]
-	return 1.0
+	return piece_weights[piece.name] if piece.name in piece_weights else 1.0
 
 func get_range_step(a: int, b: int) -> int:
 	if (a > b):
@@ -250,15 +257,17 @@ func get_kart_target_position(kart_id: int, from_furthest: bool, index_add: int 
 	return grid_map.to_global(current_track[index].target_position)
 
 func compare_kart_progression(kart_a: Kart, kart_b: Kart) -> bool:
-	var kart_a_index = kart_id_to_current_piece_index[kart_a.controller.kart_id] if kart_a.controller.kart_id in kart_id_to_current_piece_index else 0
-	var kart_b_index = kart_id_to_current_piece_index[kart_b.controller.kart_id] if kart_b.controller.kart_id in kart_id_to_current_piece_index else 0
+	var kart_a_id = kart_a.controller.kart_id
+	var kart_b_id = kart_b.controller.kart_id
+	var kart_a_index = kart_id_to_current_piece_index[kart_a_id] if kart_a_id in kart_id_to_current_piece_index else 0
+	var kart_b_index = kart_id_to_current_piece_index[kart_b_id] if kart_b_id in kart_id_to_current_piece_index else 0
 
 	if kart_a_index < kart_b_index:
 		return false
 
 	if kart_a_index == kart_b_index:
-		var kart_a_distance = (get_kart_target_position(kart_a.controller.kart_id, false, 1) - kart_a.global_position).length()
-		var kart_b_distance = (get_kart_target_position(kart_b.controller.kart_id, false, 1) - kart_b.global_position).length()
+		var kart_a_distance = (get_kart_target_position(kart_a_id, false, 0) - kart_a.global_position).length()
+		var kart_b_distance = (get_kart_target_position(kart_b_id, false, 0) - kart_b.global_position).length()
 	
 		if kart_a_distance > kart_b_distance:
 			return false

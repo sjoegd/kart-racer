@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://o5efyvo7pxlw"]
+[gd_scene load_steps=17 format=3 uid="uid://o5efyvo7pxlw"]
 
 [ext_resource type="Script" path="res://scripts/track.gd" id="1_4h7ru"]
 [ext_resource type="MeshLibrary" uid="uid://hu22onoe3tbd" path="res://assets/track-kit/track-kit-library.tres" id="1_hlntf"]
@@ -8,11 +8,14 @@
 [ext_resource type="Resource" uid="uid://jmqrqttsdsjg" path="res://resources/track-piece/corner_left.tres" id="4_dnt5l"]
 [ext_resource type="Resource" uid="uid://blw2vb0j5y8jx" path="res://resources/track-piece/corner_right.tres" id="5_ga5vo"]
 [ext_resource type="Resource" uid="uid://dqvf4krfh1lwl" path="res://resources/track-piece/ramp_up.tres" id="6_b205b"]
+[ext_resource type="Resource" uid="uid://bpakm742h3cdt" path="res://resources/track-piece/corner_big_left.tres" id="6_hu4ad"]
 [ext_resource type="Resource" uid="uid://12qer2nutu0n" path="res://resources/track-piece/ramp_down.tres" id="7_brgvi"]
+[ext_resource type="Resource" uid="uid://bkgparjulgheq" path="res://resources/track-piece/corner_big_right.tres" id="8_ckbxv"]
 [ext_resource type="Resource" uid="uid://u4fi00qotij6" path="res://resources/track-piece/finish.tres" id="11_0siun"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0adl1"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wefhm"]
 rough = true
+bounce = 1.0
 absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jxx3d"]
@@ -21,18 +24,23 @@ size = Vector3(8, 2.5, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_fh4vf"]
 size = Vector3(10, 3, 10)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0adl1"]
+friction = 0.4
+rough = true
+bounce = 0.05
+
 [node name="Track" type="Node3D"]
 script = ExtResource("1_4h7ru")
-track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("5_ga5vo"), ExtResource("6_b205b"), ExtResource("7_brgvi"), ExtResource("11_0siun")])
+track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("6_hu4ad"), ExtResource("5_ga5vo"), ExtResource("8_ckbxv"), ExtResource("6_b205b"), ExtResource("7_brgvi"), ExtResource("11_0siun")])
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_hlntf")
-physics_material = SubResource("PhysicsMaterial_0adl1")
+physics_material = SubResource("PhysicsMaterial_wefhm")
 cell_size = Vector3(10, 3, 10)
 cell_center_y = false
 collision_mask = 2
 data = {
-"cells": PackedInt32Array(0, 0, 655360, 0, 1, 655360)
+"cells": PackedInt32Array(0, 0, 16)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
@@ -53,19 +61,31 @@ shape = SubResource("BoxShape3D_fh4vf")
 
 [node name="CellAreas" type="Node3D" parent="GridMap"]
 
+[node name="GridMap BORDER" type="GridMap" parent="."]
+mesh_library = ExtResource("1_hlntf")
+physics_material = SubResource("PhysicsMaterial_0adl1")
+cell_size = Vector3(10, 3, 10)
+cell_center_y = false
+collision_layer = 8
+collision_mask = 2
+data = {
+"cells": PackedInt32Array(0, 0, 17)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
 [node name="Spawns" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0.05)
 
 [node name="One" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, 2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4, 0, -7.8)
 
 [node name="Two" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, 7.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0, -2.8)
 
 [node name="Three" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, 12.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4, 0, 2.2)
 
 [node name="Four" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, 17.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0, 7.2)
 
 [connection signal="body_entered" from="GridMap/FinishArea" to="." method="_on_finish_area_body_entered"]

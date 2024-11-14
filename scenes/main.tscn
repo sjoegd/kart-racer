@@ -11,24 +11,28 @@ script = ExtResource("4_b2514")
 kart_color = Color(0.068, 0.5678, 0.68, 1)
 controller_type = 1
 view = false
+name = ""
 
 [sub_resource type="Resource" id="Resource_ggc4o"]
 script = ExtResource("4_b2514")
 kart_color = Color(0.3536, 0.68, 0.068, 1)
 controller_type = 1
 view = false
+name = ""
 
 [sub_resource type="Resource" id="Resource_im4cl"]
 script = ExtResource("4_b2514")
 kart_color = Color(0.629, 0.068, 0.68, 1)
 controller_type = 1
 view = false
+name = ""
 
 [sub_resource type="Resource" id="Resource_mtctj"]
 script = ExtResource("4_b2514")
 kart_color = Color(0.682353, 0.12549, 0.0705882, 1)
 controller_type = 0
 view = true
+name = "Sjoegd"
 
 [node name="Main" type="Node3D"]
 
@@ -41,8 +45,10 @@ track = NodePath("Track")
 
 [node name="Track" parent="Race" instance=ExtResource("1_seqm2")]
 track_length = 50
-right_weight = 0.5
-left_weight = 0.5
+left_weight = 0.25
+right_weight = 0.25
+big_left_weight = 0.15
+big_right_weight = 0.15
 up_weight = 0.2
 down_weight = 0.2
 

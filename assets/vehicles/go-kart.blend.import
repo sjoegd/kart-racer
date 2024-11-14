@@ -33,10 +33,7 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Object_2": {
-"import/skip_import": true
-},
-"PATH:Object_3": {
+"PATH:KartReference": {
 "import/skip_import": true
 }
 }

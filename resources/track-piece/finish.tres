@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_nw1f7")
 name = "Finish"
-mesh_name = "Straight"
+mesh_name = "Finish"
 before_update = Vector3(0, 0, 0)
 update = Vector3(0, 0, -1)
 mesh_before_update = Vector3(0, 0, 0)
