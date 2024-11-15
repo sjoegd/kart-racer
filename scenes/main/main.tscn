@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjnpjokfvqg86"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_5cah4"]
+[ext_resource type="PackedScene" uid="uid://o5efyvo7pxlw" path="res://scenes/track.tscn" id="1_seqm2"]
+[ext_resource type="PackedScene" uid="uid://dpsdto1nfdjw0" path="res://scenes/base_environment.tscn" id="2_pi34l"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="3_g1h16"]
+[ext_resource type="PackedScene" uid="uid://5uktv3tdwns2" path="res://scenes/view.tscn" id="3_hsest"]
+[ext_resource type="Script" path="res://scripts/race.gd" id="3_sr167"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_5cah4")
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("3_g1h16")
+control_mode = 0
+
+[node name="BaseEnvironment" parent="." instance=ExtResource("2_pi34l")]
+
+[node name="Race" type="Node3D" parent="." node_paths=PackedStringArray("main", "track")]
+script = ExtResource("3_sr167")
+main = NodePath("..")
+track = NodePath("Track")
+
+[node name="Track" parent="Race" instance=ExtResource("1_seqm2")]
+track_length = 50
+left_weight = 0.25
+right_weight = 0.25
+big_left_weight = 0.15
+big_right_weight = 0.15
+up_weight = 0.2
+down_weight = 0.2
+
+[node name="View" parent="Race" node_paths=PackedStringArray("race") instance=ExtResource("3_hsest")]
+race = NodePath("..")

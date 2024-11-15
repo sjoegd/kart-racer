@@ -1,7 +1,7 @@
 extends Node3D
 class_name View
 
-@export var race: Race
+@export var race : Race
 
 @export var camera_follow_distance := 2.4
 @export var camera_follow_height := 1.4
@@ -26,10 +26,8 @@ func _on_race_race_reset(start: bool) -> void:
 func reset_view_to_kart(kart: KartController):
 	if _viewed_kart:
 		_viewed_kart.being_viewed = false
-		_viewed_kart.kart.engine.remove_viewed_db()
 	_viewed_kart = kart
 	_viewed_kart.being_viewed = true
-	_viewed_kart.kart.engine.set_viewed_db()
 	reset_cameras()
 
 func reset_cameras():

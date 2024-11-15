@@ -1,7 +1,7 @@
 extends KartController
 class_name Player
 
-func process_input(viewed: bool):
+func _process_input(viewed: bool):
 	if not viewed:
 		kart.throttle_input = 0.0
 		kart.steering_input = 0.0

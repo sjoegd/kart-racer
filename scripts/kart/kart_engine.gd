@@ -14,11 +14,8 @@ func _ready():
 	max_db = c_db
 	play(randf())
 
-func set_viewed_db():
-	c_db = db + 5.0
-
-func remove_viewed_db():
-	c_db = db
+func set_viewed_db(viewed: bool):
+	c_db = db + 5.0 if viewed else db
 
 func _physics_process(delta: float) -> void:
 	rpm = lerp(rpm, min_rpm + kart.get_rpm(), 30.0 * delta)

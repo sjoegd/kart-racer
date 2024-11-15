@@ -21,22 +21,23 @@ func _ready() -> void:
 		ray_container.add_child(ray)
 		rays.append(ray)
 
-func _process(delta: float) -> void:
-	handle_ray_alignment(delta)
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+	_handle_ray_alignment(delta)
 
-func handle_ray_alignment(delta: float):
+func _handle_ray_alignment(delta: float):
 	if abs(kart.rotation.x) <= deg_to_rad(ray_angle_correct):
 		ray_container.rotation.x = -kart.rotation.x
 	else:
 		ray_container.rotation.x = lerp(ray_container.rotation.x, 0.0, 10.0 * delta)
 
-func process_input(_viewed: bool):
-	var interest = calculate_interest()
-	var danger = calculate_danger()
-	var direction = calculate_direction(interest, danger)
-	perform_bot_input(direction)
+func _process_input(_viewed: bool):
+	var interest = _calculate_interest()
+	var danger = _calculate_danger()
+	var direction = _calculate_direction(interest, danger)
+	_perform_bot_input(direction)
 
-func calculate_interest() -> Array[float]:
+func _calculate_interest() -> Array[float]:
 	var target_position = (race.track.get_kart_target_position(kart_id, false, 1) - kart.global_position).normalized()
 	var ray_to_interest = func(ray: RayCast3D) -> float:
 		var ray_target = (ray.to_global(ray.target_position) - kart.global_position).normalized()
@@ -45,7 +46,7 @@ func calculate_interest() -> Array[float]:
 	interest.assign(rays.map(ray_to_interest))
 	return interest
 
-func calculate_danger() -> Array[float]:
+func _calculate_danger() -> Array[float]:
 	var ray_to_danger = func(ray: RayCast3D) -> float:
 		if not ray.is_colliding():
 			return 0.0
@@ -56,7 +57,7 @@ func calculate_danger() -> Array[float]:
 	danger.assign(rays.map(ray_to_danger))
 	return danger
 
-func calculate_direction(interest: Array[float], danger: Array[float]) -> Vector3:
+func _calculate_direction(interest: Array[float], danger: Array[float]) -> Vector3:
 	var direction = Vector3.ZERO
 	for i in rays.size():
 		var direction_weight = clamp(interest[i] - (1.25 * danger[i]), -interest[i] / 8 if interest[i] > 0.65 else 0.0, 1.0)
@@ -65,7 +66,7 @@ func calculate_direction(interest: Array[float], danger: Array[float]) -> Vector
 		direction += rays[i].target_position.normalized() * direction_weight
 	return direction
 
-func perform_bot_input(direction: Vector3):
+func _perform_bot_input(direction: Vector3):
 	direction = -direction.normalized()
 	
 	var throttle = direction.z

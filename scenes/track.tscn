@@ -1,20 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://o5efyvo7pxlw"]
+[gd_scene load_steps=8 format=3 uid="uid://o5efyvo7pxlw"]
 
 [ext_resource type="Script" path="res://scripts/track.gd" id="1_4h7ru"]
 [ext_resource type="MeshLibrary" uid="uid://hu22onoe3tbd" path="res://assets/track-kit/track-kit-library.tres" id="1_hlntf"]
-[ext_resource type="Script" path="res://resources/track-piece/track_piece.gd" id="2_1ijw8"]
-[ext_resource type="Resource" uid="uid://b2qwkiom38wlo" path="res://resources/track-piece/start.tres" id="3_ma2cg"]
-[ext_resource type="Resource" uid="uid://cbb7yo0raxqjg" path="res://resources/track-piece/straight.tres" id="3_qpi15"]
-[ext_resource type="Resource" uid="uid://jmqrqttsdsjg" path="res://resources/track-piece/corner_left.tres" id="4_dnt5l"]
-[ext_resource type="Resource" uid="uid://blw2vb0j5y8jx" path="res://resources/track-piece/corner_right.tres" id="5_ga5vo"]
-[ext_resource type="Resource" uid="uid://dqvf4krfh1lwl" path="res://resources/track-piece/ramp_up.tres" id="6_b205b"]
-[ext_resource type="Resource" uid="uid://bpakm742h3cdt" path="res://resources/track-piece/corner_big_left.tres" id="6_hu4ad"]
-[ext_resource type="Resource" uid="uid://12qer2nutu0n" path="res://resources/track-piece/ramp_down.tres" id="7_brgvi"]
-[ext_resource type="Resource" uid="uid://bkgparjulgheq" path="res://resources/track-piece/corner_big_right.tres" id="8_ckbxv"]
-[ext_resource type="Resource" uid="uid://u4fi00qotij6" path="res://resources/track-piece/finish.tres" id="11_0siun"]
+[ext_resource type="Resource" uid="uid://btukwdsh8ki5f" path="res://resources/track/basic_track/basic_track_collection.tres" id="2_fnjr6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wefhm"]
-rough = true
+friction = 0.0
 bounce = 1.0
 absorbent = true
 
@@ -27,13 +18,13 @@ size = Vector3(10, 3, 10)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0adl1"]
 friction = 0.4
 rough = true
-bounce = 0.05
+bounce = 0.03
 
 [node name="Track" type="Node3D"]
 script = ExtResource("1_4h7ru")
-track_pieces = Array[ExtResource("2_1ijw8")]([ExtResource("3_ma2cg"), ExtResource("3_qpi15"), ExtResource("4_dnt5l"), ExtResource("6_hu4ad"), ExtResource("5_ga5vo"), ExtResource("8_ckbxv"), ExtResource("6_b205b"), ExtResource("7_brgvi"), ExtResource("11_0siun")])
+track_collection = ExtResource("2_fnjr6")
 
-[node name="GridMap" type="GridMap" parent="."]
+[node name="RoadMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_hlntf")
 physics_material = SubResource("PhysicsMaterial_wefhm")
 cell_size = Vector3(10, 3, 10)
@@ -44,24 +35,24 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="FinishArea" type="Area3D" parent="GridMap"]
+[node name="FinishArea" type="Area3D" parent="RoadMap"]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/FinishArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadMap/FinishArea"]
 shape = SubResource("BoxShape3D_jxx3d")
 
-[node name="BaseCellArea" type="Area3D" parent="GridMap"]
+[node name="BaseCellArea" type="Area3D" parent="RoadMap"]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/BaseCellArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadMap/BaseCellArea"]
 shape = SubResource("BoxShape3D_fh4vf")
 
-[node name="CellAreas" type="Node3D" parent="GridMap"]
+[node name="CellAreas" type="Node3D" parent="RoadMap"]
 
-[node name="GridMap BORDER" type="GridMap" parent="."]
+[node name="BorderMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_hlntf")
 physics_material = SubResource("PhysicsMaterial_0adl1")
 cell_size = Vector3(10, 3, 10)
@@ -88,4 +79,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4, 0, 2.2)
 [node name="Four" type="Marker3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0, 7.2)
 
-[connection signal="body_entered" from="GridMap/FinishArea" to="." method="_on_finish_area_body_entered"]
+[connection signal="body_entered" from="RoadMap/FinishArea" to="." method="_on_finish_area_body_entered"]

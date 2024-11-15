@@ -11,16 +11,14 @@ script = ExtResource("1_tht8p")
 
 [node name="Cameras" type="Node3D" parent="."]
 
-[node name="FreeLookCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-current = true
-script = ExtResource("2_i1rb0")
-
 [node name="FollowCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 2.4)
 fov = 85.0
 
 [node name="RearFollowCamera" type="Camera3D" parent="Cameras"]
+
+[node name="FreeLookCamera" type="Camera3D" parent="Cameras"]
+current = true
+script = ExtResource("2_i1rb0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

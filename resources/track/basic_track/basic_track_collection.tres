@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TrackCollection" load_steps=12 format=3 uid="uid://btukwdsh8ki5f"]
+
+[ext_resource type="Script" path="res://resources/track/track-collection.gd" id="1_h17i6"]
+[ext_resource type="Script" path="res://resources/track/track_piece.gd" id="2_he2s5"]
+[ext_resource type="Resource" uid="uid://bpakm742h3cdt" path="res://resources/track/basic_track/pieces/corner_big_left.tres" id="3_mnjq4"]
+[ext_resource type="Resource" uid="uid://bkgparjulgheq" path="res://resources/track/basic_track/pieces/corner_big_right.tres" id="4_jowf8"]
+[ext_resource type="Resource" uid="uid://jmqrqttsdsjg" path="res://resources/track/basic_track/pieces/corner_left.tres" id="5_o6u2p"]
+[ext_resource type="Resource" uid="uid://blw2vb0j5y8jx" path="res://resources/track/basic_track/pieces/corner_right.tres" id="6_jbgtn"]
+[ext_resource type="Resource" uid="uid://u4fi00qotij6" path="res://resources/track/basic_track/pieces/finish.tres" id="7_4ews7"]
+[ext_resource type="Resource" uid="uid://12qer2nutu0n" path="res://resources/track/basic_track/pieces/ramp_down.tres" id="8_krsne"]
+[ext_resource type="Resource" uid="uid://dqvf4krfh1lwl" path="res://resources/track/basic_track/pieces/ramp_up.tres" id="9_0c7hb"]
+[ext_resource type="Resource" uid="uid://b2qwkiom38wlo" path="res://resources/track/basic_track/pieces/start.tres" id="10_ls5af"]
+[ext_resource type="Resource" uid="uid://cbb7yo0raxqjg" path="res://resources/track/basic_track/pieces/straight.tres" id="11_estbk"]
+
+[resource]
+script = ExtResource("1_h17i6")
+track_pieces = Array[ExtResource("2_he2s5")]([ExtResource("10_ls5af"), ExtResource("11_estbk"), ExtResource("5_o6u2p"), ExtResource("3_mnjq4"), ExtResource("6_jbgtn"), ExtResource("4_jowf8"), ExtResource("9_0c7hb"), ExtResource("8_krsne"), ExtResource("7_4ews7")])

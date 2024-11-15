@@ -1,14 +1,23 @@
 extends Node3D
 class_name KartController
 
-enum TYPE {PLAYER, BOT}
+enum TYPE {PLAYER, BOT, RLBOT}
+
+signal request_reset(controller: KartController)
 
 @export var kart : Kart
 @export var kart_id : int = 0
 @export var color: Color = Color('ae2012')
-@export var being_viewed := false
-@export var user_name := "Kart"
 @export var race : Race
+@export var user_name := "Kart"
+
+var being_viewed := false:
+	get:
+		return being_viewed
+	set(viewed):
+		kart.engine.set_viewed_db(viewed)
+		being_viewed = viewed
+
 
 func reset(global_pos: Vector3, global_rot: Vector3):
 	kart.linear_velocity = Vector3.ZERO
@@ -20,9 +29,12 @@ func reset(global_pos: Vector3, global_rot: Vector3):
 	kart.brake_input = 0.0
 
 func _physics_process(_delta):
-	process_input(being_viewed)
+	_process_input(being_viewed)
 
-func process_input(_viewed: bool):
+func on_finished(_place: int) -> void:
+	request_reset.emit(self)
+
+func _process_input(_viewed: bool):
 	push_error("NOT IMPLEMENTED!")
 
 func get_controller_name() -> String:

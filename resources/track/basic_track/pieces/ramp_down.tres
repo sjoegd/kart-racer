@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TrackPiece" load_steps=2 format=3 uid="uid://12qer2nutu0n"]
+
+[ext_resource type="Script" path="res://resources/track/track_piece.gd" id="1_k1s1o"]
+
+[resource]
+script = ExtResource("1_k1s1o")
+name = "Down"
+mesh_name = "RampALT"
+before_update = Vector3(0, -1, -1)
+update = Vector3(0, 0, -1)
+mesh_before_update = Vector3(0, 0, 0)
+mesh_update = Vector3(0, -2, -2)
+rotation_update = 0.0
+mesh_rotation = 180.0
+target_position_change = Vector3(0, -1, -1.5)
+target_position_prediction_mult = Vector3(1, 0.5, 1)
+follow_up_pieces = Array[String](["Straight", "Left", "Big Left", "Right", "Big Right"])

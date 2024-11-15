@@ -1,0 +1,293 @@
+[gd_scene load_steps=5 format=3 uid="uid://ylmvwmfjxmf1"]
+
+[ext_resource type="Script" path="res://scripts/kart_controller/rl_bot.gd" id="1_2eakw"]
+[ext_resource type="Script" path="res://scripts/kart_controller/rl_bot_ai_controller.gd" id="2_7weh5"]
+[ext_resource type="PackedScene" uid="uid://c1y2e37vb8jo0" path="res://scenes/kart/kart.tscn" id="3_76b0e"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sensors/sensors_3d/RaycastSensor3D.gd" id="4_7txbi"]
+
+[node name="RLBot" type="Node3D" node_paths=PackedStringArray("kart")]
+script = ExtResource("1_2eakw")
+kart = NodePath("Kart")
+
+[node name="RLBotAIController" type="Node3D" parent="." node_paths=PackedStringArray("rl_bot")]
+script = ExtResource("2_7weh5")
+rl_bot = NodePath("..")
+
+[node name="Kart" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("3_76b0e")]
+controller = NodePath("..")
+
+[node name="BorderSensor" type="Node3D" parent="Kart"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("4_7txbi")
+collision_mask = 8
+boolean_class_mask = 8
+n_rays_width = 32.0
+n_rays_height = 1.0
+cone_width = 360.0
+cone_height = 0.0
+
+[node name="node_0 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-0.980171, 0, -9.95185)
+collision_mask = 8
+
+[node name="node_1 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-2.90285, 0, -9.5694)
+collision_mask = 8
+
+[node name="node_2 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-4.71397, 0, -8.81921)
+collision_mask = 8
+
+[node name="node_3 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-6.34393, 0, -7.7301)
+collision_mask = 8
+
+[node name="node_4 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-7.7301, 0, -6.34393)
+collision_mask = 8
+
+[node name="node_5 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-8.81921, 0, -4.71397)
+collision_mask = 8
+
+[node name="node_6 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-9.5694, 0, -2.90285)
+collision_mask = 8
+
+[node name="node_7 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-9.95185, 0, -0.980171)
+collision_mask = 8
+
+[node name="node_8 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-9.95185, 0, 0.980171)
+collision_mask = 8
+
+[node name="node_9 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-9.5694, 0, 2.90285)
+collision_mask = 8
+
+[node name="node_10 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-8.81921, 0, 4.71397)
+collision_mask = 8
+
+[node name="node_11 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-7.7301, 0, 6.34393)
+collision_mask = 8
+
+[node name="node_12 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-6.34393, 0, 7.7301)
+collision_mask = 8
+
+[node name="node_13 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-4.71397, 0, 8.81921)
+collision_mask = 8
+
+[node name="node_14 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-2.90285, 0, 9.5694)
+collision_mask = 8
+
+[node name="node_15 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(-0.980171, 0, 9.95185)
+collision_mask = 8
+
+[node name="node_16 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(0.980171, 0, 9.95185)
+collision_mask = 8
+
+[node name="node_17 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(2.90285, 0, 9.5694)
+collision_mask = 8
+
+[node name="node_18 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(4.71397, 0, 8.81921)
+collision_mask = 8
+
+[node name="node_19 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(6.34393, 0, 7.7301)
+collision_mask = 8
+
+[node name="node_20 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(7.7301, 0, 6.34393)
+collision_mask = 8
+
+[node name="node_21 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(8.81921, 0, 4.71397)
+collision_mask = 8
+
+[node name="node_22 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(9.5694, 0, 2.90285)
+collision_mask = 8
+
+[node name="node_23 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(9.95185, 0, 0.980171)
+collision_mask = 8
+
+[node name="node_24 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(9.95185, 0, -0.980171)
+collision_mask = 8
+
+[node name="node_25 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(9.5694, 0, -2.90285)
+collision_mask = 8
+
+[node name="node_26 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(8.81921, 0, -4.71397)
+collision_mask = 8
+
+[node name="node_27 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(7.7301, 0, -6.34393)
+collision_mask = 8
+
+[node name="node_28 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(6.34393, 0, -7.7301)
+collision_mask = 8
+
+[node name="node_29 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(4.71397, 0, -8.81921)
+collision_mask = 8
+
+[node name="node_30 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(2.90285, 0, -9.5694)
+collision_mask = 8
+
+[node name="node_31 0" type="RayCast3D" parent="Kart/BorderSensor"]
+target_position = Vector3(0.980171, 0, -9.95185)
+collision_mask = 8
+
+[node name="KartSensor" type="Node3D" parent="Kart"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("4_7txbi")
+collision_mask = 2
+boolean_class_mask = 2
+n_rays_width = 32.0
+n_rays_height = 1.0
+cone_width = 360.0
+cone_height = 0.0
+
+[node name="node_0 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-0.980171, 0, -9.95185)
+collision_mask = 2
+
+[node name="node_1 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-2.90285, 0, -9.5694)
+collision_mask = 2
+
+[node name="node_2 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-4.71397, 0, -8.81921)
+collision_mask = 2
+
+[node name="node_3 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-6.34393, 0, -7.7301)
+collision_mask = 2
+
+[node name="node_4 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-7.7301, 0, -6.34393)
+collision_mask = 2
+
+[node name="node_5 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-8.81921, 0, -4.71397)
+collision_mask = 2
+
+[node name="node_6 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-9.5694, 0, -2.90285)
+collision_mask = 2
+
+[node name="node_7 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-9.95185, 0, -0.980171)
+collision_mask = 2
+
+[node name="node_8 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-9.95185, 0, 0.980171)
+collision_mask = 2
+
+[node name="node_9 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-9.5694, 0, 2.90285)
+collision_mask = 2
+
+[node name="node_10 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-8.81921, 0, 4.71397)
+collision_mask = 2
+
+[node name="node_11 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-7.7301, 0, 6.34393)
+collision_mask = 2
+
+[node name="node_12 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-6.34393, 0, 7.7301)
+collision_mask = 2
+
+[node name="node_13 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-4.71397, 0, 8.81921)
+collision_mask = 2
+
+[node name="node_14 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-2.90285, 0, 9.5694)
+collision_mask = 2
+
+[node name="node_15 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(-0.980171, 0, 9.95185)
+collision_mask = 2
+
+[node name="node_16 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(0.980171, 0, 9.95185)
+collision_mask = 2
+
+[node name="node_17 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(2.90285, 0, 9.5694)
+collision_mask = 2
+
+[node name="node_18 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(4.71397, 0, 8.81921)
+collision_mask = 2
+
+[node name="node_19 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(6.34393, 0, 7.7301)
+collision_mask = 2
+
+[node name="node_20 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(7.7301, 0, 6.34393)
+collision_mask = 2
+
+[node name="node_21 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(8.81921, 0, 4.71397)
+collision_mask = 2
+
+[node name="node_22 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(9.5694, 0, 2.90285)
+collision_mask = 2
+
+[node name="node_23 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(9.95185, 0, 0.980171)
+collision_mask = 2
+
+[node name="node_24 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(9.95185, 0, -0.980171)
+collision_mask = 2
+
+[node name="node_25 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(9.5694, 0, -2.90285)
+collision_mask = 2
+
+[node name="node_26 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(8.81921, 0, -4.71397)
+collision_mask = 2
+
+[node name="node_27 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(7.7301, 0, -6.34393)
+collision_mask = 2
+
+[node name="node_28 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(6.34393, 0, -7.7301)
+collision_mask = 2
+
+[node name="node_29 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(4.71397, 0, -8.81921)
+collision_mask = 2
+
+[node name="node_30 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(2.90285, 0, -9.5694)
+collision_mask = 2
+
+[node name="node_31 0" type="RayCast3D" parent="Kart/KartSensor"]
+target_position = Vector3(0.980171, 0, -9.95185)
+collision_mask = 2

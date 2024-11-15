@@ -27,6 +27,9 @@ func _on_race_progression_tick():
 func update_entries():
 	for i in view.race.karts.size():
 		var entry = find_kart_entry(view.race.karts[i])
+		if not entry:
+			entry = create_entry(view.race.karts[i], i + 1)
+			add_entry(entry)
 		update_entry(entry, i + 1)
 		entry_container.move_child(entry, i)
 

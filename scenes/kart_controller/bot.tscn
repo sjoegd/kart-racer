@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://5v8afgkm5vm0"]
+
+[ext_resource type="Script" path="res://scripts/kart_controller/bot.gd" id="1_0afdn"]
+[ext_resource type="PackedScene" uid="uid://c1y2e37vb8jo0" path="res://scenes/kart/kart.tscn" id="2_f6d4y"]
+
+[node name="Bot" type="Node3D" node_paths=PackedStringArray("kart")]
+script = ExtResource("1_0afdn")
+kart = NodePath("Kart")
+
+[node name="Kart" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("2_f6d4y")]
+controller = NodePath("..")
+
+[node name="BaseRay" type="RayCast3D" parent="Kart"]
+target_position = Vector3(0, 0, -1)
+collision_mask = 10
+
+[node name="RayContainer" type="Node3D" parent="Kart"]
+visible = false
