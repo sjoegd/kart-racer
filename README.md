@@ -1,6 +1,6 @@
 # Kart Racer
 
-A simple (to be multiplayer) kart racing game that will contain highly intelligent bots using Deep Reinforcement Learning.
+A simple (to be multiplayer) kart racing game created in Godot containing highly advanced RL bots to race against.
 
 ## Attributions
 
