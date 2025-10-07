@@ -8,7 +8,7 @@ Tracks are generated randomly with many options, such as how often corners shoul
 The bots are trained using PPO using the [godot-rl-agents](https://github.com/edbeeching/godot_rl_agents) library, with some custom tweaks to allow for self-play.  
 Gameplay footage of the first iteration of the RL bots can be seen below:
 
-https://github.com/user-attachments/assets/46cd0577-eada-4157-8266-8a9e30b2b696
+https://github.com/user-attachments/assets/51b27a13-d4b2-436b-844d-96eccd0a71e6
 
 ## Attributions
 
