@@ -7,6 +7,7 @@ A simple (to be multiplayer) kart racing game created in Godot containing highly
 Tracks are generated randomly with many options, such as how often corners should appear and whether the height of the track is allowed to change.  
 The bots are trained using PPO using the [godot-rl-agents](https://github.com/edbeeching/godot_rl_agents) library, with some custom tweaks to allow for self-play.
 Gameplay of the first iteration of the bots can be seen below:
+[Bot Showcase](https://github.com/sjoegd/kart-racer/blob/main/bot-showcase.mp4)
 
 ## Attributions
 
